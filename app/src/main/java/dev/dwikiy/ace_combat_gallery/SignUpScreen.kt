@@ -95,14 +95,17 @@ fun SignUpScreen(navController : NavController) {
             ) {
                 val email = remember { mutableStateOf("") }
                 val password = remember { mutableStateOf("") }
+                val username = remember { mutableStateOf("") }
 
                 LogicHeader()
 
                 SignUpFields(
                     email = email.value,
                     password = password.value,
+                    username.value,
                     onEmailChange = { email.value = it },
-                    onPasswordChange = { password.value = it }
+                    onPasswordChange = { password.value = it },
+                    OnUsernameChange = { username.value = it },
                 )
 
                 SignUpFooter (
@@ -129,7 +132,7 @@ private fun LogicHeader() {
 
 
 @Composable
-private fun SignUpFields(email: String, password: String, onEmailChange: (String) -> Unit, onPasswordChange: (String) -> Unit) {
+private fun SignUpFields(email: String, password: String, username: String, onEmailChange: (String) -> Unit, onPasswordChange: (String) -> Unit, OnUsernameChange: (String) -> Unit) {
     Column {
         TextField(
             value = email,
@@ -157,6 +160,20 @@ private fun SignUpFields(email: String, password: String, onEmailChange: (String
             ),
             leadingIcon = {
                 Icon(Icons.Default.Lock, contentDescription = "Password")
+            }
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        TextField(
+            value = username,
+            label = "Username",
+            placeholder = "Enter your username",
+            onValueChange = OnUsernameChange,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
+            leadingIcon = {
+                Icon(Icons.Default.Lock, contentDescription = "Username")
             }
         )
     }

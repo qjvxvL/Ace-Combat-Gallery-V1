@@ -39,8 +39,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.media3.common.MediaItem
-import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.NavController
 
 @Composable
@@ -98,13 +96,16 @@ fun LoginScreen(navController: NavController) {
             ) {
                 val email = remember { mutableStateOf("") }
                 val password = remember { mutableStateOf("") }
+                val username = remember { mutableStateOf("") }
                 LogicHeader()
                 Spacer(modifier = Modifier.height(20.dp))
                 LoginFields(
+                    username = username.value,
                     email = email.value,
                     password = password.value,
                     onEmailChange = { email.value = it },
-                    onPasswordChange = { password.value = it }
+                    onPasswordChange = { password.value = it },
+                    onUsernameChange = { username.value = it }
                 )
                 LoginFooter(
                     onSignInClick = {
@@ -155,7 +156,14 @@ fun LoginFooter(
 }
 
 @Composable
-fun LoginFields(email: String, password: String, onEmailChange: (String) -> Unit, onPasswordChange: (String) -> Unit) {
+fun LoginFields(
+    email: String,
+    password: String,
+    username: String,
+    onUsernameChange: (String) -> Unit,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+) {
     Column {
         TextField(
             value = email,
@@ -183,6 +191,21 @@ fun LoginFields(email: String, password: String, onEmailChange: (String) -> Unit
             ),
             leadingIcon = {
                 Icon(Icons.Default.Lock, contentDescription = "Password")
+            }
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+
+        TextField(
+            value = username,
+            label = "Username",
+            placeholder = "Enter your username",
+            onValueChange = onUsernameChange,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
+            leadingIcon = {
+                Icon(Icons.Default.Lock, contentDescription = "Username")
             }
         )
     }
