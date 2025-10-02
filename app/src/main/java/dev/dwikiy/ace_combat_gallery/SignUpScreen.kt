@@ -98,7 +98,6 @@ fun SignUpScreen(navController : NavController) {
                 val username = remember { mutableStateOf("") }
 
                 LogicHeader()
-
                 SignUpFields(
                     email = email.value,
                     password = password.value,
